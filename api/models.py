@@ -9,6 +9,7 @@ class PlanComptable(models.Model):
     quantite = models.IntegerField()
 
 class Menu(models.Model):
+
     nom = models.CharField(max_length=60)
     categorie = models.CharField(max_length=60)
     debiteur = models.ForeignKey(PlanComptable)
@@ -21,4 +22,4 @@ class HistoriqueMenu(models.Model):
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    change_description = models.CharField()
+    motif = models.CharField()
