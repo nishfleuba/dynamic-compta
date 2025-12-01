@@ -14,7 +14,7 @@ class Menu(models.Model):
     categorie = models.CharField(max_length=60)
     debiteur = models.ForeignKey(PlanComptable)
     crediteur = models.ForeignKey(PlanComptable)
-    amortissement = models.BooleanField(default=False)
+    amortissement = models.CharField(max_length=60)
     is_deleted = models.BooleanField(default=False)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
