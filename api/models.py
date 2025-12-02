@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 
 class PlanComptable(models.Model):
+    nom = models.CharField(max_length=100)
     numero = models.IntegerField()
     is_active = models.BooleanField(default=False)
     quantite_unitaire = models.IntegerField()

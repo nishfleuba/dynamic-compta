@@ -3,7 +3,7 @@ from .models import *
 
 @admin.register(PlanComptable)
 class PlanComptableAdmin(admin.ModelAdmin):
-    list_display = ('numero', 'is_active', 'quantite_unitaire')
+    list_display = ('nom','numero', 'is_active', 'quantite_unitaire')
     list_filter = ('is_active',)
 
 @admin.register(Menu)
