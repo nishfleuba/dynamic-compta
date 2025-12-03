@@ -4,7 +4,7 @@ from .models import *
 
 @admin.register(PlanComptable)
 class PlanComptableAdmin(admin.ModelAdmin):
-    list_display = ('nom','numero', 'is_active', 'quantite_unitaire')
+    list_display = ('numero','nom', 'is_active', 'quantite_unitaire')
     list_filter = ('is_active',)
 
 from django.contrib import admin, messages
@@ -23,9 +23,11 @@ class MenuAdmin(admin.ModelAdmin):
             obj.created_by = request.user
             obj.validate_by = None      
             obj.validate_at = None      
-        super().save_model(request, obj, form, change)
-
-            
+            super().save_model(request, obj, form, change)
+        else:
+            messages.set_level(request, messages.ERROR)
+            messages.error(request, "La modification n'est pas autorisée")
+            return 
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

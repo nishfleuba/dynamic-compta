@@ -5,12 +5,14 @@ from django.contrib.auth.models import User
 
 class PlanComptable(models.Model):
     nom = models.CharField(max_length=100)
-    numero = models.IntegerField()
+    numero = models.CharField(max_length=100)
     is_active = models.BooleanField(default=False,editable=False)
     quantite_unitaire = models.IntegerField()
 
     def __str__(self):
         return f"{self.numero}"
+    class Meta:
+        ordering= ['numero']
 
 class Menu(models.Model):
 
