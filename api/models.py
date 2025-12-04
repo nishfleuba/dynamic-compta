@@ -7,12 +7,13 @@ class PlanComptable(models.Model):
     nom = models.CharField(max_length=100)
     numero = models.CharField(max_length=100)
     is_active = models.BooleanField(default=False,editable=False)
-    quantite_unitaire = models.IntegerField()
+    quantite_unitaire = models.IntegerField(null=True,blank=True)
 
-    def __str__(self):
-        return f"{self.numero}"
     class Meta:
         ordering= ['numero']
+
+    def __str__(self):
+        return f"Le{self.nom} {self.numero}"
 
 class Menu(models.Model):
 
@@ -28,7 +29,7 @@ class Menu(models.Model):
     permitted_users = models.ManyToManyField(User, blank=True, related_name='menus_permis')
 
     def __str__(self):
-        return f"{self.nom}-{self.debiteur} - {self.crediteur} - {self.amortissement}"
+        return f"Le Menu {self.nom} du {self.categorie} creer par {self.created_by} valide le {self.validate_at} par {self.validate_by}"
 
 class Journal(models.Model):
 
@@ -41,7 +42,7 @@ class Journal(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.PROTECT,editable=False)
 
     def __str__(self):
-        return f"{self.menu.nom} - {self.montant}-{self.debiteur} - {self.crediteur}"
+        return f"{self.menu.nom}-{self.debiteur} - {self.crediteur}-{self.amortissement}"
 
 class HistoriqueMenu(models.Model):
     menu = models.ForeignKey(Menu, on_delete=models.PROTECT)

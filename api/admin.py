@@ -45,8 +45,18 @@ class MenuAdmin(admin.ModelAdmin):
 
         if obj.validate_by or Journal.objects.filter(menu=obj).exists():
             messages.error(request, f"Le menu '{obj.nom}' ne peut pas être supprimé car il a été validé ou journalisé.")
-            return
+            return False
         super().delete_model(request, obj)
+
+    def delete_queryset(self, request, queryset):
+
+        for obj in queryset:
+            
+            if obj.validate_by or Journal.objects.filter(menu=obj).exists():
+                messages.set_level(request, messages.ERROR)
+                messages.error(request, f"Le menu '{obj.nom}' ne peut pas être supprimé car il a été validé ou journalisé.")
+                return False
+        return super().delete_queryset(request, queryset)
 
     def valider_menu(self, request, queryset):
 
@@ -74,7 +84,7 @@ class MenuAdmin(admin.ModelAdmin):
                 motif=f"Validation du menu {menu.nom}"
             )
 
-        messages.success(request, "Validation effectuée avec succès.")
+        messages.success(request, f"Validation du {menu.nom} effectuée avec succès.")
 
     valider_menu.short_description = "Valider menu"
 
